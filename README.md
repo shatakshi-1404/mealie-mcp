@@ -99,8 +99,26 @@ uv run regen-client --update   # refetch from $MEALIE_BASE_URL/openapi.json and 
 
 ```sh
 uv run pytest          # unit tests
-uv run pytest -m live  # live tests, require a local .env
+uv run pytest -m live  # live tests, require a running Mealie instance
 ```
+
+### Running live tests
+
+The repo ships a helper script that boots a local Mealie instance, mints an
+API token, and prints the environment variables ready to paste into `.env`:
+
+```sh
+scripts/mealie-up
+```
+
+Copy the printed values into `.env` (see `.env.example` for the variable
+names). Once the instance is running, execute the live suite:
+
+```sh
+uv run pytest -m live
+```
+
+See `scripts/README.md` for more details on the helper script.
 
 ## License
 
