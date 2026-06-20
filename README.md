@@ -99,7 +99,35 @@ uv run regen-client --update   # refetch from $MEALIE_BASE_URL/openapi.json and 
 
 ```sh
 uv run pytest          # unit tests
-uv run pytest -m live  # live tests, require a local .env
+uv run pytest -m live  # live tests, require a running Mealie instance
+```
+
+### Running live tests
+
+Live tests run against a real Mealie instance. The easiest way to spin one up locally is via Docker:
+
+```sh
+docker run -d \
+  --name mealie \
+  -p 9000:9000 \
+  ghcr.io/mealie-recipes/mealie:latest
+```
+
+Mealie will be available at `http://localhost:9000`. Default credentials: `changeme@example.com` / `MyPassword`.
+
+Create a `.env` file in the project root:
+
+```env
+MEALIE_BASE_URL=http://localhost:9000
+MEALIE_API_TOKEN=your-api-token-here
+```
+
+To get an API token: log in to your Mealie instance → Profile → API Tokens → generate one.
+
+Then run:
+
+```sh
+uv run pytest -m live
 ```
 
 ## License
